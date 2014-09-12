@@ -1,0 +1,4 @@
+script : "./Chess/build.xml"
+
+language : java
+ant all
