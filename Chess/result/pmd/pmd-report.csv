@@ -1,0 +1,12 @@
+"Problem","Package","File","Priority","Line","Description","Rule set","Rule"
+"1","","Board.java","3","50","Avoid unused local variables such as 'c'.","Unused Code Rules","UnusedLocalVariable"
+"2","","Chess.java","3","13","Avoid unused local variables such as 'check'.","Unused Code Rules","UnusedLocalVariable"
+"3","","NewGame1.java","3","727","These nested if statements could be combined","Basic Rules","CollapsibleIfStatements"
+"4","","NewGame1.java","3","737","These nested if statements could be combined","Basic Rules","CollapsibleIfStatements"
+"5","","NewGame1.java","3","1140","Avoid unused local variables such as 'k'.","Unused Code Rules","UnusedLocalVariable"
+"6","","NewGame1.java","3","1140","Avoid unused local variables such as 'l'.","Unused Code Rules","UnusedLocalVariable"
+"7","","NewGame1.java","3","1260","These nested if statements could be combined","Basic Rules","CollapsibleIfStatements"
+"8","","NewGame1.java","3","1396","These nested if statements could be combined","Basic Rules","CollapsibleIfStatements"
+"9","","NewGame1.java","3","1424","Avoid unused local variables such as 'k'.","Unused Code Rules","UnusedLocalVariable"
+"10","","NewGame1.java","3","1424","Avoid unused local variables such as 'l'.","Unused Code Rules","UnusedLocalVariable"
+

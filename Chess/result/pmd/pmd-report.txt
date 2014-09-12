@@ -1,0 +1,11 @@
+
+Board.java:50	Avoid unused local variables such as 'c'.
+Chess.java:13	Avoid unused local variables such as 'check'.
+NewGame1.java:727	These nested if statements could be combined
+NewGame1.java:737	These nested if statements could be combined
+NewGame1.java:1140	Avoid unused local variables such as 'k'.
+NewGame1.java:1140	Avoid unused local variables such as 'l'.
+NewGame1.java:1260	These nested if statements could be combined
+NewGame1.java:1396	These nested if statements could be combined
+NewGame1.java:1424	Avoid unused local variables such as 'k'.
+NewGame1.java:1424	Avoid unused local variables such as 'l'.

@@ -1,0 +1,102 @@
+<project name="Build" basedir="F:\TrialProject\Chess" default="all" xmlns:jacoco="antlib:org.jacoco.ant">
+
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="result.dir" value="${basedir}/result" />
+	<property name="result.classes.dir" value="${result.dir}/classes" />
+	<property name="result.report.dir" value="${result.dir}/jacoco" />
+	<property name="result.pmd.dir" value="${result.dir}/pmd" />
+	<property name="result.exec.file" value="${result.dir}/jacoco.exec" />
+	<!-- Define task for JaCoCo -->
+	<taskdef resource="org/jacoco/ant/antlib.xml" uri="antlib:org.jacoco.ant">
+		<classpath path="${basedir}/lib/jacoco/jacocoant.jar" />
+	</taskdef>
+	<!-- Delete result dir if present -->
+	<target name="clean">
+		<delete dir="${result.dir}" />
+	</target>
+	<!-- Compile the java code from src dir. Class files moved to bin. Report dir created -->
+	<target name="compile" depends="clean">
+		<mkdir dir="${result.classes.dir}" />
+		<mkdir dir="${result.report.dir}" />
+		<mkdir dir="${result.pmd.dir}" />
+
+		<javac srcdir="${src.dir}" destdir="${result.classes.dir}" debug="true">
+		</javac>
+
+		<copy todir="${basedir}/bin">
+			<fileset dir="${result.classes.dir}" />
+		</copy>	
+	</target>
+	<!-- Run JaCoCo testing -->
+	<target name="jacocotest" depends="compile">
+		<jacoco:coverage destfile="${result.exec.file}">
+			<java classname="Chess" fork="true">
+				<classpath>
+					<pathelement location="${result.classes.dir}" />
+				</classpath>
+			</java>
+		</jacoco:coverage>	
+	</target>
+	<!-- JaCoCo report generated -->
+	<target name="jacocoreport" depends="jacocotest">
+		<jacoco:report>
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<structure name="JacocoTest">
+				<classfiles>
+					<fileset dir="${result.classes.dir}" />
+				</classfiles>
+
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+
+			<check failonviolation="false">
+				<rule element="PACKAGE">
+					<limit counter="LINE" value="COVEREDRATIO" minimum="0.50" />
+					<limit counter="CLASS" value="MISSEDCOUNT" maximum="0" />
+				</rule>
+				<rule element="CLASS" includes="NewGame1:Chess">
+					<limit counter="LINE" value="COVEREDRATIO" minimum="0.91" />
+					<limit counter="METHOD" value="COVEREDRATIO" minimum="0.60" />
+				</rule>
+			</check>
+
+			<xml destfile="${result.report.dir}/jacoco-report.xml" />
+			<csv destfile="${result.report.dir}/jacoco-report.csv" />
+		</jacoco:report>
+
+		<echo message="jacoco-report generated!" />
+	</target>
+	<!-- Specify path for pmd jar files -->
+	<path id="pmd.classpath">
+		<fileset dir="${basedir}/lib/pmd">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<!-- pmd task declared. Required rulesets from pmd.jar. Report generated -->
+	<target name="pmd">
+		<taskdef name="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath" />
+
+		<pmd shortFilenames="true" failonerror="false" failOnRuleViolation="false" maxRuleViolations="15">
+			<ruleset>rulesets/basic.xml</ruleset>
+			<ruleset>rulesets/unusedcode.xml</ruleset>
+
+			<formatter type="csv" toFile="${result.pmd.dir}/pmd-report.csv" toConsole="true" />
+			<formatter type="text" toFile="${result.pmd.dir}/pmd-report.txt" toConsole="true" />
+			<formatter type="html" toFile="${result.pmd.dir}/pmd-report.html" toConsole="true" />
+
+			<fileset dir="${src.dir}">
+				<include name="*.java" />
+			</fileset>
+		</pmd>
+
+		<echo message="pmd-report generated!" />
+	</target>
+	<!-- default! -->
+	<target name="all" depends="jacocoreport,pmd" />
+
+</project>
